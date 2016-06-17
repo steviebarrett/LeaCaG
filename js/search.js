@@ -143,7 +143,30 @@ $('#gdToEnToggle').on("click", function() {
 
 $('#gaelicSearchField').on({
 	keyup: function (e) {
-		alert('Doesn\'t work yet!');
+		var m = false;
+		if (e.which == 38 || e.which == 40 || e.which == 13 || e.which == 27) {
+			m = navigateList(e, m);
+			return;
+		}
+		$('#suggestions').empty(); //clear any previous selections
+		listIndex = -1;
+		$('.chosen').removeClass('chosen');
+		var $searchString = $(this).val();
+		if ($searchString.length >= minChars) {
+			//get the list of suggestions from the server
+			$.getJSON("api/ajax.php?action=getGaelic&q=" + $searchString, function(data) {
+				suggestedTerms = data.results;	//save the results for later use
+				$.each(data.results, function(k, v) {
+					//assemble the suggested items list
+					$('#suggestions').append($('<li>' + v.en + '</li>'));
+				});
+				$("#suggestions").show();
+				$('#suggestions li').on('click', function () {
+					$(this).addClass('chosen');
+					//chooseSelectedTerm($(this).html());
+				})
+			})
+		}
 	},
 	keydown: function(e) {
 		if (e.which == 38 || e.which == 40 || e.which == 13) {
