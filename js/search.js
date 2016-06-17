@@ -3,7 +3,7 @@ var suggestedTerms;	//the array of suggested result objects loaded via AJAX
 var minChars = 2;
 var entryhistory = []; // placeholder for now, just ignore until we decide on back button
 
-$('#searchField').on({
+$('#englishSearchField').on({
 	keyup: function(e) {
 		var m = false;
 		if (e.which == 38 || e.which == 40 || e.which == 13 || e.which == 27) {
@@ -20,11 +20,12 @@ $('#searchField').on({
 				suggestedTerms = data.results;	//save the results for later use
 				$.each(data.results, function(k, v) {
 					//assemble the suggested items list
-					$('#suggestions').append($('<li id="idx_' + k + '">' + v.en + '</li>'));
+					$('#suggestions').append($('<li>' + v.en + '</li>'));
 				});
 				$("#suggestions").show();
 				$('#suggestions li').on('click', function () {
-					chooseSelectedTerm($(this).html(), parseIndex($(this).attr('id'), "idx"));
+					$(this).addClass('chosen');
+					chooseSelectedTerm($(this).html());
 				})
 			})
 		}
@@ -61,14 +62,14 @@ function navigateList(e, m) {
 	} else if (e.which == 27) {     //ESC key
 		$('#suggestions').hide();
 	} else if (e.which == 13) {  	//Enter key
-		chooseSelectedTerm(selectedItem.html(), parseIndex(selectedItem.attr('id'), 'idx'));
+		chooseSelectedTerm(selectedItem.html());
 	}	
 	return m;
 }
 
 //the event handler has to be attached to the document in order to register the dynamically added elements
 $(document).on('click', '.lexicopiaLink', function() {
-	var id = parseIndex($(this).attr('id'), 'lexicalLink');
+	var id = $(this).attr('href');
 	updateContent(id);
 	return false;
 });
@@ -77,7 +78,7 @@ $('#randomEntry').on("click", function() {
 	var randomid = target_index[Math.floor(Math.random()*target_index.length)].id; // need to change this to work better
 	entryhistory=[randomid]; 
 	updateContent(randomid);
-	$('#searchField').val("");
+	$('#englishSearchField').val("");
 	$('#gaelicEquivalentsList').html("");
 	return false;
 });
@@ -87,15 +88,15 @@ $('#randomEntry').on("click", function() {
  * @param word: the string value of the selected word
  * @param arrayIdx: the position of the selected word within the file's array
  */
-function chooseSelectedTerm(term, arrayIdx) {
-	$('#searchField').val(term);
+function chooseSelectedTerm(term) {
+	$('#englishSearchField').val(term);
 	$('#suggestions').hide();
-	$('#gaelicEquivalentsList').html("");
-	var gds = suggestedTerms[arrayIdx].gds;
+	$('#gaelicEquivalentsList').empty();
+	var gds = suggestedTerms[$('.chosen').index()].gds;
 	if (gds.length > 1) {
 		$('#gaelicEquivalentsList').append("Gaelic equivalents for <i>" + term + "</i>: ");
 		for(var i = 0;i < gds.length;i++) {
-			$('#gaelicEquivalentsList').append('<a class="lexicopiaLink" id="lexicalLink_' + gds[i].id + '" href="#" >' + gds[i].form + '</a>');
+			$('#gaelicEquivalentsList').append('<a class="lexicopiaLink" href="' + gds[i].id + '">' + gds[i].form + '</a>');
 			if (i<(gds.length - 1)) {
 				$('#gaelicEquivalentsList').append(', ');
 			}
@@ -105,17 +106,6 @@ function chooseSelectedTerm(term, arrayIdx) {
 	else {
 		updateContent(gds[0].id);
 	}
-	selectedItem = null;    //clear the previously selected item
-}
-
-/*
-	Parses a class attribute in format "idx_xxxx..."
-	Returns the index value where index = xxxx
- */
-function parseIndex(string, prefix) {
-	var regExp = new RegExp(prefix + "_(\\S+).*");	//matches on non-whitespace to avoid capturing other classes
-	var matches = regExp.exec(string);
-	return matches[1];
 }
 
 function updateContent(id) {
@@ -134,3 +124,33 @@ function hideEnglish(id) {
 	$("#en-plus-" + id).show();
 	$("#en-text-" + id).hide();
 }
+
+$('#enToGdToggle').on("click", function() {
+	$('#englishSearchField').val("");
+	$('#gaelicEquivalentsList').empty();
+	$('#mainContent').empty();
+	$("#englishSearchForm").hide();
+	$("#gaelicSearchForm").show();
+	return false;
+});
+
+$('#gdToEnToggle').on("click", function() {
+	$('#gaelicSearchField').val("");
+	$("#englishSearchForm").show();
+	$("#gaelicSearchForm").hide();
+	return false;
+});
+
+$('#gaelicSearchField').on({
+	keyup: function (e) {
+		alert('Doesn\'t work yet!');
+	},
+	keydown: function(e) {
+		if (e.which == 38 || e.which == 40 || e.which == 13) {
+			e.preventDefault();
+		}
+	},
+	click: function() {
+		$(this).val("");	//clear the search field for a new query
+	}
+});
