@@ -31,7 +31,7 @@ function getGaelic($q) {
 	$gaelicIndex = file_get_contents("../../lexicopia/gd/target-index.json");
 	$results = array();
 	$json = json_decode($gaelicIndex, true);
-	foreach ($json["gaelic_index"] as $item) {
+	foreach ($json["target_index"] as $item) {
 		if (strtolower(substr($item["word"], 0, strlen($q))) == strtolower($q)) {
 			$results[] = $item;
 		}
