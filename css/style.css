@@ -1,0 +1,119 @@
+@charset "UTF-8";
+
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+  select,
+  textarea,
+  input {
+    font-size: 16px;
+  }
+}
+
+#suggestions {
+    position:absolute;
+    background-color: white;
+    width:21em;
+    display: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: 1px solid black;
+    margin-top: -6px;
+    z-index: 1;
+}
+
+#suggestions li {
+    padding: 5px;
+}
+
+#suggestions li:hover {
+    cursor: pointer;
+}
+
+.chosen {
+    background: rgba(0,120,0, .2);
+}
+
+#suggestions li:hover, li:active {
+    background: rgba(0,120,0, .2);
+}
+
+a:link {
+    color:#336699;
+    text-decoration: none;
+}
+
+a:visited {
+    color:#336699;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+div#gaelicEquivalentsList {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+div.lexicopia-entry {
+    /*padding: 20px; */
+    /*font-size: 12pt; */
+    /*font-family: Helvetica, Verdana, sans-serif; */
+    color: gray;
+    /*border: thin solid;*/
+}
+
+div.lexicopia-entry-header {
+    padding: 10px;
+    background-color: ghostwhite;
+}
+
+span.lexicopia-headword {
+    color: #996633;
+    font-weight: bold;
+    /*font-size: x-large; */
+}
+
+div.lexicopia-pos {
+    /* padding-top: 10px; */
+    font-style: italic;
+}
+
+dl.lexicopia-entry-relations {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+    /*border: thin solid;*/
+}
+
+ul.lexicopia-entry-notes {
+    /*padding-top: 20px;
+    font-size: small;
+    padding-left: 20px;*/
+}
+
+/*
+
+dt {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+dd {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+
+
+dd > dl {
+    margin-top: 0px;
+}
+
+dd > dl > dt {
+    padding-top: 0px;
+    padding-bottom: 0px;
+}
+
+*/

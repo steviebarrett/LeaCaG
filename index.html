@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <title>LeaCaG</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <header>
+                    <nav class="navbar navbar-default">
+                        <div class="container-fluid">
+                            <div class="navbar-header">
+                                <!-- This just creates the collapse button for mobiles - SB -->
+                                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                    <span class="icon-bar"></span>
+                                </button>
+                                <span class="navbar-brand">LeaCaG</span>
+                            </div>
+                            <!-- Collapsible nav for mobiles - SB -->
+                            <div class="collapse navbar-collapse" id="navbar-collapse">
+                                <ul class="nav navbar-nav">
+                                    <li class="active"><a href="#">home</a></li>
+                                    <li><a href="#">about</a></li>
+                                    <li><a href="#" id="randomEntry">random</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                </header>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div>
+                    <form role="search">
+                        <span class="glyphicon glyphicon-search"></span>
+                        <input type="search" id="searchField" placeholder="Search for English term" autocomplete="off" size="30">
+                    </form>
+                    <ul id="suggestions">
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="gaelicEquivalentsList">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div id="mainContent">
+                </div>
+            </div>
+        </div>
+        <!--
+        <div class="row">
+            <div class="col-md-12">
+                <footer>
+                    <p>Please send any feedback to the editor: Mark.McConville@glasgow.ac.uk</p>
+                </footer>
+            </div>
+        </div>
+        -->
+    </div>
+    <script src="js/jquery-1.12.2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!--script src="../lexicopia/gd/english-index.js"></script-->
+    <script src="../lexicopia/gd/target-index.js"></script>
+    <script src="js/search.js"></script>
+    <script>
+    	$(function() {
+    		//close the dropdown when a navbar link is clicked (mobile)
+    		$('.navbar-collapse a').on('click', function(){
+    		    $(".navbar-collapse").collapse('hide');
+    		});	
+    	});
+    </script>
+</body>
+</html>
