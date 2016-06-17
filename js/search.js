@@ -13,10 +13,10 @@ $('#englishSearchField').on({
 		$('#suggestions').empty(); //clear any previous selections
 		listIndex = -1;
 		$('.chosen').removeClass('chosen');
-		var $searchString = $(this).val();
-		if ($searchString.length >= minChars) {
+		var searchString = $(this).val();
+		if (searchString.length >= minChars) {
 			//get the list of suggestions from the server
-			$.getJSON("api/ajax.php?action=getEnglish&q=" + $searchString, function(data) {
+			$.getJSON("api/ajax.php?action=getEnglish&q=" + searchString, function(data) {
 				suggestedTerms = data.results;	//save the results for later use
 				$.each(data.results, function(k, v) {
 					//assemble the suggested items list
@@ -151,20 +151,23 @@ $('#gaelicSearchField').on({
 		$('#suggestions').empty(); //clear any previous selections
 		listIndex = -1;
 		$('.chosen').removeClass('chosen');
-		var $searchString = $(this).val();
-		if ($searchString.length >= minChars) {
+		var searchString = $(this).val();
+		if (searchString.length >= minChars) {
 			//get the list of suggestions from the server
-			$.getJSON("api/ajax.php?action=getGaelic&q=" + $searchString, function(data) {
+			console.log(searchString);
+			$.getJSON("api/ajax.php?action=getGaelic&q=" + searchString, function(data) {
+				
 				suggestedTerms = data.results;	//save the results for later use
 				$.each(data.results, function(k, v) {
 					//assemble the suggested items list
-					$('#suggestions').append($('<li>' + v.en + '</li>'));
+					$('#suggestions').append($('<li>' + v.word + '</li>'));
 				});
 				$("#suggestions").show();
 				$('#suggestions li').on('click', function () {
 					$(this).addClass('chosen');
-					//chooseSelectedTerm($(this).html());
+					//chooseSelectedTerm($(this).html()); // this needs to be done later
 				})
+				
 			})
 		}
 	},
