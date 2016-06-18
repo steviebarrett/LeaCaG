@@ -7,7 +7,7 @@ $('#englishSearchField').on({
 	keyup: function(e) {
 		var m = false;
 		if (e.which == 38 || e.which == 40 || e.which == 13 || e.which == 27) {
-			m = navigateList(e, m);
+			m = navigateList(e, m, 'en');
 			return;
 		}
 		$('#suggestions').empty(); //clear any previous selections
@@ -25,7 +25,7 @@ $('#englishSearchField').on({
 				$("#suggestions").show();
 				$('#suggestions li').on('click', function () {
 					$(this).addClass('chosen');
-					chooseSelectedTerm($(this).html());
+					chooseSelectedTerm($(this).html(),'en');
 				})
 			})
 		}
@@ -40,7 +40,7 @@ $('#englishSearchField').on({
 	}
 });
 
-function navigateList(e, m) {
+function navigateList(e, m, lang) {
 	var selectedItem = $('li.chosen');
 	if (e.which == 38) {    	//Up arrow
 		listIndex--;
@@ -62,7 +62,7 @@ function navigateList(e, m) {
 	} else if (e.which == 27) {     //ESC key
 		$('#suggestions').hide();
 	} else if (e.which == 13) {  	//Enter key
-		chooseSelectedTerm(selectedItem.html());
+		chooseSelectedTerm(selectedItem.html(),lang);
 	}	
 	return m;
 }
@@ -88,24 +88,31 @@ $('#randomEntry').on("click", function() {
  * @param word: the string value of the selected word
  * @param arrayIdx: the position of the selected word within the file's array
  */
-function chooseSelectedTerm(term) {
-	$('#englishSearchField').val(term);
+function chooseSelectedTerm(term, lang) {
+	$('#englishSearchField').val("");
+    $('#gaelicSearchField').val("");
 	$('#suggestions').hide();
 	$('#gaelicEquivalentsList').empty();
-	var gds = suggestedTerms[$('.chosen').index()].gds;
-	if (gds.length > 1) {
-		$('#gaelicEquivalentsList').append("Gaelic equivalents for <i>" + term + "</i>: ");
-		for(var i = 0;i < gds.length;i++) {
-			$('#gaelicEquivalentsList').append('<a class="lexicopiaLink" href="' + gds[i].id + '">' + gds[i].form + '</a>');
-			if (i<(gds.length - 1)) {
-				$('#gaelicEquivalentsList').append(', ');
-			}
-		}
-		$('#mainContent').empty();
-	}
-	else {
-		updateContent(gds[0].id);
-	}
+    if (lang=='en') {
+        var gds = suggestedTerms[$('.chosen').index()].gds;
+        if (gds.length > 1) {
+            $('#gaelicEquivalentsList').append("Gaelic equivalents for <i>" + term + "</i>: ");
+            for(var i = 0;i < gds.length;i++) {
+                $('#gaelicEquivalentsList').append('<a class="lexicopiaLink" href="' + gds[i].id + '">' + gds[i].form + '</a>');
+                if (i<(gds.length - 1)) {
+                    $('#gaelicEquivalentsList').append(', ');
+                }
+            }
+            $('#mainContent').empty();
+        }
+        else {
+            updateContent(gds[0].id);
+        }
+    }
+	else if (lang=='gd') {
+        updateContent(suggestedTerms[$('.chosen').index()].id);
+    }
+
 }
 
 function updateContent(id) {
@@ -145,7 +152,7 @@ $('#gaelicSearchField').on({
 	keyup: function (e) {
 		var m = false;
 		if (e.which == 38 || e.which == 40 || e.which == 13 || e.which == 27) {
-			m = navigateList(e, m);
+			m = navigateList(e, m, 'gd');
 			return;
 		}
 		$('#suggestions').empty(); //clear any previous selections
@@ -156,7 +163,6 @@ $('#gaelicSearchField').on({
 			//get the list of suggestions from the server
 			console.log(searchString);
 			$.getJSON("api/ajax.php?action=getGaelic&q=" + searchString, function(data) {
-				
 				suggestedTerms = data.results;	//save the results for later use
 				$.each(data.results, function(k, v) {
 					//assemble the suggested items list
@@ -165,7 +171,7 @@ $('#gaelicSearchField').on({
 				$("#suggestions").show();
 				$('#suggestions li').on('click', function () {
 					$(this).addClass('chosen');
-					//chooseSelectedTerm($(this).html()); // this needs to be done later
+					chooseSelectedTerm($(this).html(), 'gd'); // this needs to be done later
 				})
 				
 			})
