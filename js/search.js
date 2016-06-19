@@ -78,13 +78,12 @@ $('#randomEntry').on("click", function() {
 	$('#englishSearchField').val("");
 	$('#gaelicSearchField').val("");
 	$('#gaelicEquivalentsList').html("");
-	var randomid = "cù";
 	$.getJSON("api/ajax.php?action=getRandom", function(data) {
-		randomid = data; // THIS DOESN'T WORK
+		var randomid = data.randomEntry.id; // THIS DOESN'T WORK
+        entryhistory=[randomid];
+        updateContent(randomid);
+        return false;
 	})
-    entryhistory=[randomid];
-    updateContent(randomid);
-    return false;
 });
 
 /**
