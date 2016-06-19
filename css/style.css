@@ -65,7 +65,8 @@ div.lexicopia-entry {
     /*font-size: 12pt; */
     /*font-family: Helvetica, Verdana, sans-serif; */
     color: gray;
-    /*border: thin solid;*/
+    border: thin solid;
+    /* background-color: lightyellow; */
 }
 
 div.lexicopia-entry-header {
