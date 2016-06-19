@@ -63,6 +63,7 @@ function navigateList(e, m, lang) {
 		$('#suggestions').hide();
 	} else if (e.which == 13) {  	//Enter key
 		chooseSelectedTerm(selectedItem.html(),lang);
+		// what if no list item has been selected? Select first item in list?
 	}	
 	return m;
 }
