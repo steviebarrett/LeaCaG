@@ -45,10 +45,9 @@ function getGaelic($q) {
 
 function getRandom() {
     $gaelicIndex = file_get_contents("../../lexicopia/gd/target-index.json");
-  	$results = array();
   	$json = json_decode($gaelicIndex, true);
-  	return "cù";
-
-
-    //$json["target_index"]
+	$randomKey = array_rand($json["target_index"]);
+  	$randomEntry = $json["target_index"][$randomKey];
+  	return json_encode(array("randomEntry"=>$randomEntry));
+  
 }
