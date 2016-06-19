@@ -13,6 +13,10 @@ switch ($action) {
 		$query = $_GET["q"];
 		echo getGaelic($query);
 		break;
+
+	case "getRandom":
+	    echo getRandom();
+	    break;
 }
 
 function getEnglish($q) {
@@ -37,4 +41,14 @@ function getGaelic($q) {
 		}
 	}
 	return json_encode(array("results"=>$results));
+}
+
+function getRandom() {
+    $gaelicIndex = file_get_contents("../../lexicopia/gd/target-index.json");
+  	$results = array();
+  	$json = json_decode($gaelicIndex, true);
+  	return "cù";
+
+
+    //$json["target_index"]
 }
