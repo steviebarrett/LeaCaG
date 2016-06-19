@@ -75,12 +75,16 @@ $(document).on('click', '.lexicopiaLink', function() {
 });
 
 $('#randomEntry').on("click", function() {
-	var randomid = target_index[Math.floor(Math.random()*target_index.length)].id; // need to change this to work better
-	entryhistory=[randomid]; 
-	updateContent(randomid);
 	$('#englishSearchField').val("");
+	$('#gaelicSearchField').val("");
 	$('#gaelicEquivalentsList').html("");
-	return false;
+	var randomid = "cù";
+	$.getJSON("api/ajax.php?action=getRandom", function(data) {
+		randomid = data; // THIS DOESN'T WORK
+	})
+    entryhistory=[randomid];
+    updateContent(randomid);
+    return false;
 });
 
 /**
@@ -161,7 +165,6 @@ $('#gaelicSearchField').on({
 		var searchString = $(this).val();
 		if (searchString.length >= minChars) {
 			//get the list of suggestions from the server
-			console.log(searchString);
 			$.getJSON("api/ajax.php?action=getGaelic&q=" + searchString, function(data) {
 				suggestedTerms = data.results;	//save the results for later use
 				$.each(data.results, function(k, v) {
@@ -173,7 +176,6 @@ $('#gaelicSearchField').on({
 					$(this).addClass('chosen');
 					chooseSelectedTerm($(this).html(), 'gd'); // this needs to be done later
 				})
-				
 			})
 		}
 	},
