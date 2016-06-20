@@ -41,7 +41,6 @@ $('#englishSearchField').on({
 });
 
 function navigateList(e, m, lang) {
-	var selectedItem = $('li.chosen');
 	if (e.which == 38) {    	//Up arrow
 		listIndex--;
 		if (listIndex < 0) {
@@ -62,8 +61,16 @@ function navigateList(e, m, lang) {
 	} else if (e.which == 27) {     //ESC key
 		$('#suggestions').hide();
 	} else if (e.which == 13) {  	//Enter key
-		chooseSelectedTerm(selectedItem.html(),lang);
-		// what if no list item has been selected? Select first item in list?
+		var n = $('.chosen').index();
+		if (n == -1) { // no list item selected
+			$('#mainContent').empty();
+			$('#gaelicEquivalentsList').empty();
+			chooseTermFromFieldValue(lang);
+		}
+		else {
+			var selectedItem = $('li.chosen');
+			chooseSelectedTerm(selectedItem.html(),lang);
+		}
 	}	
 	return m;
 }
@@ -116,7 +123,22 @@ function chooseSelectedTerm(term, lang) {
 	else if (lang=='gd') {
         updateContent(suggestedTerms[$('.chosen').index()].id);
     }
+}
 
+function chooseTermFromFieldValue(lang) {
+	$('#suggestions').hide();
+	if (lang=='en') {
+		console.log($('#englishSearchField').val());
+	}
+	else if (lang=='gd') {
+		try {
+			updateContent($('#gaelicSearchField').val());
+		}
+		catch (exc) { // this doesn't work as intended
+			$('#mainContent').html($('#gaelicSearchField').val() + " is not in the dictionary.");
+		}
+		$('#gaelicSearchField').val("");
+	}
 }
 
 function updateContent(id) {
