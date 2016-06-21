@@ -29,7 +29,10 @@ $('#englishSearchField').on({
 				})
 			})
 		}
-	},
+        else {
+            $("#suggestions").hide(); // hide when backspace is pressed and just one character in field
+        }
+    },
 	keydown: function(e) {
 		if (e.which == 38 || e.which == 40 || e.which == 13) {
 			e.preventDefault();
@@ -159,18 +162,22 @@ function hideEnglish(id) {
 }
 
 $('#enToGdToggle').on("click", function() {
+    $('#suggestions').hide();
 	$('#englishSearchField').val("");
 	$('#gaelicEquivalentsList').empty();
 	$('#mainContent').empty();
 	$("#englishSearchForm").hide();
 	$("#gaelicSearchForm").show();
+    $('#gaelicSearchField').focus();
 	return false;
 });
 
 $('#gdToEnToggle').on("click", function() {
+    $('#suggestions').hide();
 	$('#gaelicSearchField').val("");
 	$("#englishSearchForm").show();
 	$("#gaelicSearchForm").hide();
+    $('#englishSearchField').focus();
 	return false;
 });
 
@@ -200,6 +207,9 @@ $('#gaelicSearchField').on({
 				})
 			})
 		}
+        else {
+            $("#suggestions").hide(); // hide when backspace is pressed and just one character in field
+        }
 	},
 	keydown: function(e) {
 		if (e.which == 38 || e.which == 40 || e.which == 13) {
