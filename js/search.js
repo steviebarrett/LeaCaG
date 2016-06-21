@@ -177,6 +177,7 @@ $('#gdToEnToggle').on("click", function() {
 	$('#gaelicSearchField').val("");
 	$("#englishSearchForm").show();
 	$("#gaelicSearchForm").hide();
+    $('#mainContent').empty();
     $('#englishSearchField').focus();
 	return false;
 });
