@@ -8,6 +8,10 @@
   }
 }
 
+body {
+    font-family: Verdana, Helvetica, sans-serif;
+}
+
 #suggestions {
     position:absolute;
     background-color: white;
@@ -63,7 +67,6 @@ div#gaelicEquivalentsList {
 div.lexicopia-entry {
     /*padding: 20px; */
     /*font-size: 12pt; */
-    /*font-family: Helvetica, Verdana, sans-serif; */
     color: gray;
     border: thin solid;
     /* background-color: lightyellow; */
@@ -77,7 +80,6 @@ div.lexicopia-entry-header {
 span.lexicopia-headword {
     color: #996633;
     font-weight: bold;
-    font-family: "Comic Sans MS", serif;
     /*font-size: x-large; */
 }
 
