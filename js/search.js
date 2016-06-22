@@ -131,11 +131,11 @@ function chooseSelectedTerm(term, lang) {
 function chooseTermFromFieldValue(lang) {
 	$('#suggestions').hide();
 	if (lang=='en') {
-		console.log($('#englishSearchField').val());
+		console.log($('#englishSearchField').val()); // still to do
 	}
 	else if (lang=='gd') {
 		try {
-			updateContent($('#gaelicSearchField').val());
+			updateContent($('#gaelicSearchField').val()); // this needs to refer to target_index.json, in case form and id are different
 		}
 		catch (exc) { // this doesn't work as intended
 			$('#mainContent').html($('#gaelicSearchField').val() + " is not in the dictionary.");
