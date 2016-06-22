@@ -65,14 +65,9 @@ function navigateList(e, m, lang) {
 		$('#suggestions').hide();
 	} else if (e.which == 13) {  	//Enter key
 		var n = $('.chosen').index();
-		if (n == -1) { // no list item selected
-			$('#mainContent').empty();
-			$('#gaelicEquivalentsList').empty();
-			chooseTermFromFieldValue(lang);
-		}
-		else {
-			var selectedItem = $('li.chosen');
-			chooseSelectedTerm(selectedItem.html(),lang);
+		if (n != -1) { // some list item is selected
+            var selectedItem = $('li.chosen');
+            chooseSelectedTerm(selectedItem.html(),lang);
 		}
 	}	
 	return m;
@@ -126,22 +121,6 @@ function chooseSelectedTerm(term, lang) {
 	else if (lang=='gd') {
         updateContent(suggestedTerms[$('.chosen').index()].id);
     }
-}
-
-function chooseTermFromFieldValue(lang) {
-	$('#suggestions').hide();
-	if (lang=='en') {
-		console.log($('#englishSearchField').val()); // still to do
-	}
-	else if (lang=='gd') {
-		try {
-			updateContent($('#gaelicSearchField').val()); // this needs to refer to target_index.json, in case form and id are different
-		}
-		catch (exc) { // this doesn't work as intended
-			$('#mainContent').html($('#gaelicSearchField').val() + " is not in the dictionary.");
-		}
-		$('#gaelicSearchField').val("");
-	}
 }
 
 function updateContent(id) {
