@@ -80,6 +80,13 @@ $(document).on('click', '.lexicopiaLink', function() {
 	return false;
 });
 
+//close the suggestions link on click outside search
+$(document).mouseup(function(e) {
+	if (!$('#suggestions').is(e.target) && $('#suggestions').has(e.target).length === 0) {
+		$('#suggestions').hide();
+	}
+});
+
 $('#randomEntry').on("click", function() {
 	$('#englishSearchField').val("");
 	$('#gaelicSearchField').val("");
