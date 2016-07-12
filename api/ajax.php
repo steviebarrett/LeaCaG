@@ -32,11 +32,13 @@ function getEnglish($q) {
 }
 
 function getGaelic($q) {
+	$aiQ = getAccentInsensitive($q);
 	$gaelicIndex = file_get_contents("../../lexicopia/gd/target-index.json");
 	$results = array();
 	$json = json_decode($gaelicIndex, true);
+	$pattern = "/^" . $aiQ . ".*/ui";
 	foreach ($json["target_index"] as $item) {
-		if (strtolower(substr($item["word"], 0, strlen($q))) == strtolower($q)) {
+		if (preg_match($pattern, $item["word"])) {
 			$results[] = $item;
 		}
 	}
@@ -50,4 +52,35 @@ function getRandom() {
   	$randomEntry = $json["target_index"][$randomKey];
   	return json_encode(array("randomEntry"=>$randomEntry));
   
+}
+
+function getAccentInsensitive($text) {
+    $regExp = "";
+    $accentMappedChars = array(
+        "aàá", "eèé", "iìí", "oòó", "uùú"
+    );
+    foreach (str_split_unicode($text) as $char) {
+        $replaced = false;
+        foreach ($accentMappedChars as $accentMap) {
+            if (stristr($accentMap, $char)) {
+                $regExp .= "[{$accentMap}]";
+                $replaced = true;
+            }
+        }
+        if ($replaced == false)
+            $regExp .= $char;
+    }
+    return $regExp;
+}
+
+function str_split_unicode($str, $l = 0) {
+    if ($l > 0) {
+        $ret = array();
+        $len = mb_strlen($str, "UTF-8");
+        for ($i = 0; $i < $len; $i += $l) {
+            $ret[] = mb_substr($str, $i, $l, "UTF-8");
+        }
+        return $ret;
+    }
+    return preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
 }
